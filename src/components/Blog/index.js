@@ -1,3 +1,6 @@
+/* eslint-disable arrow-body-style */
+/* eslint-disable react/function-component-definition */
+
 // Composants
 import Header from 'src/components/Header';
 import Posts from 'src/components/Posts';
@@ -15,7 +18,7 @@ const Blog = () => {
 
   return (
     <div className="blog">
-      <Header />
+      <Header categories={categoriesData} />
       <Posts />
       <Footer />
     </div>

@@ -12,8 +12,8 @@ export default [
     label: 'React',
   },
   {
-    route: '/oclock',
-    label: 'O’clock',
+    route: '/game',
+    label: 'Game',
   },
   {
     route: '/autre',
