@@ -1,6 +1,7 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable react/function-component-definition */
-
+// npm
+import { useState } from 'react';
 // Composants
 import Header from 'src/components/Header';
 import Posts from 'src/components/Posts';
@@ -13,12 +14,20 @@ import './styles.scss';
 
 // == Composant
 const Blog = () => {
+  const [isZenMode, setIsZenMode] = useState(false);
+
   console.log(categoriesData);
   console.log(postsData);
 
   return (
     <div className="blog">
       <Header categories={categoriesData} />
+      <button
+        type="button"
+        onClick={() => setIsZenMode(!isZenMode)}
+      >
+        {isZenMode ? 'desactiver' : 'Activer'}
+      </button>
       <Posts posts={postsData} />
       <Footer />
     </div>
