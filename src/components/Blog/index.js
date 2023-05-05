@@ -21,13 +21,7 @@ const Blog = () => {
 
   return (
     <div className="blog">
-      <Header categories={categoriesData} />
-      <button
-        type="button"
-        onClick={() => setIsZenMode(!isZenMode)}
-      >
-        {isZenMode ? 'desactiver' : 'Activer'}
-      </button>
+      <Header categories={categoriesData} zenMode={isZenMode} setZenMode={setIsZenMode} />
       <Posts posts={postsData} />
       <Footer />
     </div>
