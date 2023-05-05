@@ -22,7 +22,7 @@ const Blog = () => {
   return (
     <div className="blog">
       <Header categories={categoriesData} zenMode={isZenMode} setZenMode={setIsZenMode} />
-      <Posts posts={postsData} />
+      <Posts posts={postsData} zenMode={isZenMode} />
       <Footer />
     </div>
   );
