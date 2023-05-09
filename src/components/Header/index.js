@@ -1,14 +1,31 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable react/function-component-definition */
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
+
 import './styles.scss';
 
 const Header = ({ categories, zenMode, setZenMode }) => (
   <header className="menu">
     <nav>
-      {categories.map(
-        (category) => <a key={category.label} className="menu-link" href="{category.route}">{category.label}</a>,
-      )}
+      {/* le composant link,  lors du click sur le lien,
+      va venir ajouter une entrée dans l'historique du navigateur
+      mais sans recharger la page */}
+      {
+        categories.map(
+          (category) => (
+            <NavLink
+              key={category.label}
+              className={
+                ({ isActive }) => (isActive ? 'menu-link menu-link--selected' : 'menu-link')
+              }
+              to={category.route}
+            >
+              {category.label}
+            </NavLink>
+          ),
+        )
+      }
 
       <button
         className="menu-btn"
