@@ -16,8 +16,8 @@ import './styles.scss';
 const Blog = () => {
   const [isZenMode, setIsZenMode] = useState(false);
 
-  console.log(categoriesData);
-  console.log(postsData);
+  // console.log(categoriesData);
+  // console.log(postsData);
 
   return (
     <div className="blog">
@@ -27,6 +27,5 @@ const Blog = () => {
     </div>
   );
 };
-
 // == Export
 export default Blog;
