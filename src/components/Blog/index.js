@@ -2,6 +2,7 @@
 /* eslint-disable react/function-component-definition */
 // npm
 import { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 // Composants
 import Header from 'src/components/Header';
 import Posts from 'src/components/Posts';
@@ -22,6 +23,9 @@ const Blog = () => {
   return (
     <div className="blog">
       <Header categories={categoriesData} zenMode={isZenMode} setZenMode={setIsZenMode} />
+      <Routes>
+        <Route path="/" element={<div>HOME</div>} />
+      </Routes>
       <Posts posts={postsData} zenMode={isZenMode} />
       <Footer />
     </div>
