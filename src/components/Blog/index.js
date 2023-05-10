@@ -15,6 +15,16 @@ import './styles.scss';
 
 // == Composant
 const Blog = () => {
+  const getPostsByCategory = (posts, categoryName) => {
+    // on veut récupérer les articles d'une categorie donnée
+    if (categoryName === 'Accueil') {
+      return posts;
+    }
+
+    const filteredPosts = posts.filter((post) => post.category === categoryName);
+    return filteredPosts;
+  };
+
   const [isZenMode, setIsZenMode] = useState(false);
 
   // console.log(categoriesData);
@@ -24,9 +34,21 @@ const Blog = () => {
     <div className="blog">
       <Header categories={categoriesData} zenMode={isZenMode} setZenMode={setIsZenMode} />
       <Routes>
-        <Route path="/" element={<div>HOME</div>} />
+        {categoriesData.map(
+          (category) => (
+            <Route
+              key={category.route}
+              path={category.route}
+              element={(
+                <Posts
+                  posts={getPostsByCategory(postsData, category.label)}
+                  zenMode={isZenMode}
+                />
+              )}
+            />
+          ),
+        )}
       </Routes>
-      <Posts posts={postsData} zenMode={isZenMode} />
       <Footer />
     </div>
   );
