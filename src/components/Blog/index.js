@@ -2,7 +2,7 @@
 /* eslint-disable react/function-component-definition */
 // npm
 import { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 // Composants
 import Header from 'src/components/Header';
 import Posts from 'src/components/Posts';
@@ -49,6 +49,9 @@ const Blog = () => {
             />
           ),
         )}
+        {/* le composant permet d'établir une redirection vers un autre chemin */}
+        <Route path="/jquery" element={<Navigate to="/autre" />} />
+
         {/* on crée une route qui va afficher une 404
         si aucune corespondance entre une URL demandée et une route définit n'est déjà trouvé */}
         <Route path="*" element={<NotFound />} />
