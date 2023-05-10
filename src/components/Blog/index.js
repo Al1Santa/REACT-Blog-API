@@ -7,6 +7,7 @@ import { Routes, Route } from 'react-router-dom';
 import Header from 'src/components/Header';
 import Posts from 'src/components/Posts';
 import Footer from 'src/components/Footer';
+import NotFound from 'src/components/NotFound';
 
 // data, styles et utilitaires
 import categoriesData from 'src/data/categories';
@@ -48,6 +49,9 @@ const Blog = () => {
             />
           ),
         )}
+        {/* on crée une route qui va afficher une 404
+        si aucune corespondance entre une URL demandée et une route définit n'est déjà trouvé */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </div>
