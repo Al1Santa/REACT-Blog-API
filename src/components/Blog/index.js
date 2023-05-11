@@ -1,8 +1,10 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable react/function-component-definition */
 // npm
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import axios from 'axios';
+
 // Composants
 import Header from 'src/components/Header';
 import Posts from 'src/components/Posts';
@@ -36,32 +38,56 @@ const Blog = () => {
   // si on est en état de chargement ou NotFound
   const [loading, setLoading] = useState(false);
 
+  // la callBack  passé à uiseEffect est exécutée
+  // au montage et au re-rendu du composant ça revient =>
+  // componentDidMount + componentDidUpdate
+  // useEffect(() => {
+  //   console.log('execution de useEffect');
+  // }, []);
+
+  /*
+    En résumé :
+    useEffect(() => {}); // après tous les rendu
+    useEffect(() => {}, []); // uniquement au rendu initial
+    useEffect(() => {}, [toto, tata]);
+    => après le rendu initial et les nouveaux rendus si  toto et/ou tata change(nt)
+  */
+
   // fonction permettant de récupérer lse articles
   const loadPosts = () => {
     console.log('on charge les articles');
 
     //  On passe en état loading
     setLoading(true);
-    // on simule la latence d'appel de l'api
-    // en programmant l'execution d'une fonction au bout de seconde
-    setTimeout(
-      // fonction exécuté au bout de XX ms
-      () => {
-        console.log('articles chargé');
-        //  on veut mettre à jour la liste des articles dans le useState
-        //  Pour simuler qu'on a eu la réponse de l'api et qu'on ll'a traité
-        // on fait un nouveau rendu ( qui ne change rien car récup depuis le fichier de données)
-        setPosts(postsData);
-        //  ici on sort de l'état de chargement
-        // on ne va plus afficher le Spinner mais le routes utilisants
-        // les articles qui sont maintenant dans le state
+
+    // on va faire l'appel à l'API
+    axios
+      .get('https://oclock-open-apis.vercel.app/api/blog/posts')
+      .then((response) => {
+        // Handler/callback executée quand la promesse est tenue
+        console.log('b - Promesse tenue');
+        console.log(response.data);
+        setPosts(response.data);
+      })
+      .catch(() => {
+        // Handler/callback executée quand la promesse est rompue
+        console.log('Problème lors du contact avec l\'API');
+      })
+      .finally(() => {
+        // Handler executé quand on reçoit une réponse
+        // que la promesse ait été tenue ou rompu
+
+        // On passe la variable d'état loading à false
+        // pour re-rendre notre composant sans le Spinner
         setLoading(false);
-      },
-      // temps en millisecondes avant lequel la fonction se déclenche
-      2000,
-    );
+      });
+
     console.log('fin de la fonction loadPosts');
   };
+
+  useEffect(() => {
+    loadPosts();
+  }, []);
 
   // console.log(categoriesData);
   // console.log(postsData);
@@ -69,7 +95,6 @@ const Blog = () => {
   return (
     <div className="blog">
       <Header categories={categoriesData} zenMode={isZenMode} setZenMode={setIsZenMode} />
-      <button type="button" onClick={loadPosts}>Récupérer les articles</button>
       {loading && <Spinner />}
       {!loading && (
         <Routes>
